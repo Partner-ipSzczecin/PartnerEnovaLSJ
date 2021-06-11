@@ -852,6 +852,18 @@ namespace PartnerEnovaNormaPraca
         {
             this.Close();
         }
+
+        /// <summary>
+        /// Kopiowanie zawartości listbox'a do schowka
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void kopiujZawartoscToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string s1 = "";
+            foreach (object item in listBox1.Items) s1 += item.ToString() + "\r\n";
+            Clipboard.SetText(s1);
+        }
     }
 
     public class Aplikacja
