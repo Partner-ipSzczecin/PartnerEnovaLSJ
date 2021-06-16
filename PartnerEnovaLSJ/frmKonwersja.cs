@@ -259,7 +259,7 @@ namespace PartnerEnovaNormaPraca
         private void KonwersjaAmmega(string file)
         {
             Hashtable pracownicyKody = new Hashtable();//Hashtable na kody pracowników pobrane z bazy
-            string zawartosc = "";
+            //string zawartosc = "";
             bool brak = false;
 
             string sql = "SELECT Pracownicy.Kod, P_PracKody.Kod AS PracKod " +
@@ -287,88 +287,175 @@ namespace PartnerEnovaNormaPraca
                 }
             }
 
-            try
+            // Tworzymy nowy dokument xml
+            XmlDocument nowyDokument = new XmlDocument();
+            XmlDeclaration xmlDeclaration = nowyDokument.CreateXmlDeclaration("1.0", "Unicode", null);
+            XmlElement root = nowyDokument.DocumentElement;
+            nowyDokument.InsertBefore(xmlDeclaration, root);
+
+            XmlElement elementRoot = nowyDokument.CreateElement(string.Empty, "Root", string.Empty);
+            elementRoot.SetAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
+            elementRoot.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            nowyDokument.AppendChild(elementRoot);
+
+            // Otwieramy oryginalny plik xml
+            XmlDocument doc = new XmlDocument();
+            doc.Load(file);
+            foreach (XmlNode node in doc.DocumentElement.ChildNodes)
             {
-                using (StreamReader sr = new StreamReader(file))
+                XmlElement element = nowyDokument.CreateElement(string.Empty, node.Name, string.Empty);
+                elementRoot.AppendChild(element);
+                bool jestPracownik = false;
+                foreach (XmlNode node2 in node.ChildNodes)
                 {
-                    string text = sr.ReadToEnd();
-                    string[] lines = text.Split('\r');
-                    foreach (string l in lines)
+                    foreach (XmlNode node3 in node2.ChildNodes)
                     {
-                        string s = "";// l;
-
-
-                        if (l.Contains("<Pracownik>") == true)
+                        if (node3.Name == "Pracownik")
                         {
                             string prac = "";
                             string kod = "";
-                            int index1 = l.IndexOf("<Pracownik>") + 11;
-                            int index2 = l.IndexOf("</Pracownik>");
-                            //listBox1.Items.Add("index1: " +index1 + ", index2: " + index2 + ", lenght: " + (index2 - index1).ToString());
+
                             try
                             {
-                                prac = l.Substring(index1, index2 - index1);
+                                // Kod pracownika z oryginalnego pliku
+                                prac = node3.InnerText;
                             }
-                            catch (Exception ex) { }
+                            catch { }
                             try
                             {
+                                // Szukamy kodu LSJ
                                 kod = pracownicyKody[prac].ToString();
                             }
-                            catch (Exception ex) { }
-                            //listBox1.Items.Add("pracownik: " + prac + " - " + kod);
+                            catch { }
+
                             if (kod != "")
                             {
-                                s = l.Replace(prac, kod);
+                                // Jest kod LSJ
+                                jestPracownik = true;
+                                node3.InnerText = kod;
                             }
                             else
                             {
-                                brak = true;
-                                listBox1.Items.Add("Nie znaleziono w enovej kodu pracownika: " + prac);
+                                // Brak kodu LSJ
+                                if (chkPominBrakiKodow.Checked)
+                                {
+                                    // Pomijanie brakujących
+                                    listBox1.Items.Add($"Nie znaleziono pracownika o kodzie {prac} - pominięto");
+                                }
+                                else
+                                {
+                                    // Zablokowanie konwersji
+                                    listBox1.Items.Add($"Nie znaleziono pracownika o kodzie {prac}");
+                                    brak = true;
+                                }
                             }
                         }
 
+                        // Zamieniamy definicję urlopu
                         if (chkZamienUrlop.Checked)
-                        {
-                            if (l.Contains("<Definicja>Urlop wypoczynkowy</Definicja>"))
+                            if (node3.Name == "Definicja")
                             {
-                                s = l.Replace("<Definicja>Urlop wypoczynkowy</Definicja>", "<Definicja>Urlop wypoczynkowy prac.tymcz.</Definicja>");
+                                if (node3.InnerText == "Urlop wypoczynkowy")
+                                node3.InnerText = "Urlop wypoczynkowy prac.tymcz.";
                             }
-                        }
-
-                        if (s != "")
-                            zawartosc += s + "\r";
-                        else
-                            zawartosc += l + "\r";
                     }
-                    //listBox1.Items.Add(s);
-                }
-            }
-            catch (Exception ex) { listBox1.Items.Add("4: " + ex.ToString()); }
 
-            try
-            {
-                if (!brak && zawartosc != "")
-                {
-                    listBox1.Items.Add("Generowanie pliku");
-                    try
+                    if (jestPracownik)
                     {
-                        file = file.ToLower().Replace(".xml", "_konwersja.xml");
-                        listBox1.Items.Add(file);
-                        File.WriteAllText(file, zawartosc, Encoding.Unicode);
-                        //listBox1.Items.Add(fileDirectory);
-                        //listBox1.Items.Add(fileName);
-                        //using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath))
-                        //{
-
-                        //    file.WriteLine(zawartosc);
-                        //}
+                        XmlNode importNode = nowyDokument.ImportNode(node2, true);
+                        element.AppendChild(importNode);
                     }
-                    catch (Exception ex) { listBox1.Items.Add("1: " + ex.ToString()); }
-
                 }
 
             }
-            catch (Exception ex) { listBox1.Items.Add("3: " + ex.ToString()); }
+            if (!brak)
+                nowyDokument.Save(file.ToLower().Replace(".xml", "_konwersja.xml"));
+
+            #region Stare
+            //try
+            //{
+            //    using (StreamReader sr = new StreamReader(file))
+            //    {
+            //        string text = sr.ReadToEnd();
+            //        string[] lines = text.Split('\r');
+            //        List<string> linieWork = null;
+            //        foreach (string l in lines)
+            //        {
+            //            string s = "";// l;
+
+            //            // Pętla przez kolejne linie pliku
+            //            if (l.Contains("<Pracownik>") == true)
+            //            {
+            //                string prac = "";
+            //                string kod = "";
+            //                int index1 = l.IndexOf("<Pracownik>") + 11;
+            //                int index2 = l.IndexOf("</Pracownik>");
+            //                //listBox1.Items.Add("index1: " +index1 + ", index2: " + index2 + ", lenght: " + (index2 - index1).ToString());
+            //                try
+            //                {
+            //                    prac = l.Substring(index1, index2 - index1);
+            //                }
+            //                catch (Exception ex) { }
+            //                try
+            //                {
+            //                    kod = pracownicyKody[prac].ToString();
+            //                }
+            //                catch (Exception ex) { }
+            //                //listBox1.Items.Add("pracownik: " + prac + " - " + kod);
+            //                if (kod != "")
+            //                {
+            //                    s = l.Replace(prac, kod);
+            //                }
+            //                else
+            //                {
+            //                    brak = true;
+            //                    listBox1.Items.Add("Nie znaleziono w enovej kodu pracownika: " + prac);
+            //                }
+            //            }
+
+            //            if (chkZamienUrlop.Checked)
+            //            {
+            //                if (l.Contains("<Definicja>Urlop wypoczynkowy</Definicja>"))
+            //                {
+            //                    s = l.Replace("<Definicja>Urlop wypoczynkowy</Definicja>", "<Definicja>Urlop wypoczynkowy prac.tymcz.</Definicja>");
+            //                }
+            //            }
+
+            //            if (s != "")
+            //                zawartosc += s + "\r";
+            //            else
+            //                zawartosc += l + "\r";
+            //        }
+            //        //listBox1.Items.Add(s);
+            //    }
+            //}
+            //catch (Exception ex) { listBox1.Items.Add("4: " + ex.ToString()); }
+
+            //try
+            //{
+            //    if (!brak && zawartosc != "")
+            //    {
+            //        listBox1.Items.Add("Generowanie pliku");
+            //        try
+            //        {
+            //            file = file.ToLower().Replace(".xml", "_konwersja.xml");
+            //            listBox1.Items.Add(file);
+            //            File.WriteAllText(file, zawartosc, Encoding.Unicode);
+            //            //listBox1.Items.Add(fileDirectory);
+            //            //listBox1.Items.Add(fileName);
+            //            //using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath))
+            //            //{
+
+            //            //    file.WriteLine(zawartosc);
+            //            //}
+            //        }
+            //        catch (Exception ex) { listBox1.Items.Add("1: " + ex.ToString()); }
+
+            //    }
+
+            //}
+            //catch (Exception ex) { listBox1.Items.Add("3: " + ex.ToString()); }
+            #endregion
 
             btnLog.Enabled = true;
 

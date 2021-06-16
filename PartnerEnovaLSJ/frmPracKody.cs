@@ -122,7 +122,7 @@ namespace PartnerEnovaNormaPraca
                 "PracHistorie.AktualnoscFrom, " +
                 "PracHistorie.AktualnoscTo, " +
                 "ISNULL((SELECT TOP(1) Kod FROM P_PracKody WHERE (PracID = Pracownicy.ID) AND (P_PracKody.WydzID = " + wydz.ID + ")), '') AS PracKod, " +
-                "ISNULL((SELECT TOP(1) ID FROM P_PracKody AS P_PracKody_1 WHERE (PracID = Pracownicy.ID) AND (P_PracKody.WydzID = " + wydz.ID + ")), 0) AS PracKodId, " +
+                "ISNULL((SELECT TOP(1) ID FROM P_PracKody AS P_PracKody_1 WHERE (PracID = Pracownicy.ID) AND (P_PracKody_1.WydzID = " + wydz.ID + ")), 0) AS PracKodId, " +
                 "PracHistorie.EtatOkresFrom, " +
                 "PracHistorie.EtatOkresTo " +
                 "FROM Pracownicy INNER JOIN PracHistorie ON Pracownicy.ID = PracHistorie.Pracownik INNER JOIN Wydzialy ON PracHistorie.EtatWydzial = Wydzialy.ID " +

@@ -38,66 +38,66 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Soneta.Business, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Business, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Business.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Business.Forms, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Business.Forms, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Business.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Business.UI, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Business.UI, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Business.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Core, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Core, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Core.UI, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Core.UI, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Core.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.CRM">
+    <Reference Include="Soneta.CRM, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.CRM.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Deklaracje, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Deklaracje, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Deklaracje.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Deklaracje.UI, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Deklaracje.UI, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Deklaracje.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Forms, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Forms, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Handel, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Handel, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Handel.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.KadryPlace, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.KadryPlace, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.KadryPlace.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.KadryPlace.UI, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.KadryPlace.UI, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.KadryPlace.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Kasa, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Kasa, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Kasa.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Kasa.UI, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Kasa.UI.dll</HintPath>
+    <Reference Include="Soneta.Ksiega.UI">
+      <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Ksiega.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Printer, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Printer, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Printer.dll</HintPath>
     </Reference>
-    <Reference Include="Soneta.Types, Version=2012.2.3.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
+    <Reference Include="Soneta.Types, Version=2104.1.4.0, Culture=neutral, PublicKeyToken=a19fc6236fd34393, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Soneta\enova365 2104.1.4.0\Soneta.Types.dll</HintPath>
     </Reference>
