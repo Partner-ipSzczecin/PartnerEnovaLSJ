@@ -548,39 +548,39 @@ namespace PartnerEnovaNormaPraca
                 {
                     using (ITransaction trans = session.Logout(true))
                     {
-                        string pesel = "";
-                        string nrPaszportu = "";
+                        //string pesel = "";
+                        //string nrPaszportu = "";
 
-                        try
-                        {
-                            pesel = daneSzczegolowe.p0010;
-                        }
-                        catch { }
-                        // Polee z peselem obecnie nie jest wykorzystywane, sprawdzamy pole z numerem paszportu,
-                        // w którym obecnie wprowadzany jest także nr pesel
-                        if(daneSzczegolowe.p0011 != null)
-                        {
-                            if (pesel != "")
-                            {
-                                nrPaszportu = daneSzczegolowe.p0011;
-                            }
-                            else if (daneSzczegolowe.p0011.Length == 11) // Nr pesel ma 11 cyfr. Paszporty mają inne długości i format
-                            {
-                                int testPesel = 0;
-                                try
-                                {
-                                    // Sprawdzamy czy wprowadzony ciąg 
-                                    testPesel = int.Parse(daneSzczegolowe.p0011);
-                                }
-                                catch { }
-                                if (testPesel != 0)
-                                    pesel = daneSzczegolowe.p0011;
-                                else
-                                {
-                                    nrPaszportu = daneSzczegolowe.p0011;
-                                }
-                            }
-                        }
+                        //try
+                        //{
+                        //    pesel = daneSzczegolowe.p0010;
+                        //}
+                        //catch { }
+                        //// Polee z peselem obecnie nie jest wykorzystywane, sprawdzamy pole z numerem paszportu,
+                        //// w którym obecnie wprowadzany jest także nr pesel
+                        //if(daneSzczegolowe.p0011 != null)
+                        //{
+                        //    if (pesel != "")
+                        //    {
+                        //        nrPaszportu = daneSzczegolowe.p0011;
+                        //    }
+                        //    else if (daneSzczegolowe.p0011.Length == 11) // Nr pesel ma 11 cyfr. Paszporty mają inne długości i format
+                        //    {
+                        //        int testPesel = 0;
+                        //        try
+                        //        {
+                        //            // Sprawdzamy czy wprowadzony ciąg 
+                        //            testPesel = int.Parse(daneSzczegolowe.p0011);
+                        //        }
+                        //        catch { }
+                        //        if (testPesel != 0)
+                        //            pesel = daneSzczegolowe.p0011;
+                        //        else
+                        //        {
+                        //            nrPaszportu = daneSzczegolowe.p0011;
+                        //        }
+                        //    }
+                        //}
 
                         foreach (Pracownik p in km.Pracownicy)
                         {
@@ -631,11 +631,42 @@ namespace PartnerEnovaNormaPraca
                         }
                         if (daneSzczegolowe.p0009 != null)
                             ph.Urodzony.Miejsce = daneSzczegolowe.p0009;
-                        // Po jakichś ostatnich zmianach
-                        //if (daneSzczegolowe.p0010 != null)
-                        //    ph.PESEL = daneSzczegolowe.p0010;
-                        if (pesel != "")
-                            ph.PESEL = pesel;
+
+                        if (daneSzczegolowe.p0010 != null)
+                        {
+                            // Jeśli jest wypełniony PESEL to wstawiamy
+                            try
+                            {
+                                ph.PESEL = daneSzczegolowe.p0010;
+                            }
+                            catch { }
+                        }
+                        else
+                        {
+                            // Jeśli PESEL nie jest wypełniony to sprawdzamy czy w pozycji paszport 
+                            // jest jedenasto znakowy tekst
+                            if (daneSzczegolowe.p0011 != null && daneSzczegolowe.p0011.Replace(" ", "").Length == 11)
+                            {
+                                bool peselLiczba = false;
+                                try
+                                {
+                                    int liczba = 0;
+                                    liczba = int.Parse(daneSzczegolowe.p0011.Replace(" ", ""));
+                                    if (liczba != 0)
+                                        peselLiczba = true;
+                                }
+                                catch { }
+
+                                if (peselLiczba)
+                                    try
+                                    {
+                                        ph.PESEL = daneSzczegolowe.p0011.Replace(" ", "");
+                                    }
+                                    catch { }
+                            }
+                        }
+
+
                         if (daneSzczegolowe.p0015 != null)
                             ph.NIP = daneSzczegolowe.p0015;
                         if (daneSzczegolowe.p0053 != null)
@@ -652,7 +683,7 @@ namespace PartnerEnovaNormaPraca
                                 case "paszport":
                                     ph.Dokument.Rodzaj = KodRodzajuDokumentu.Paszport;
                                     if (daneSzczegolowe.p0055 != null)
-                                        ph.Dokument.SeriaNumer = daneSzczegolowe.p0011;
+                                        ph.Dokument.SeriaNumer = daneSzczegolowe.p0055;
                                     break;
                                 default:
                                     break;
