@@ -341,6 +341,7 @@ namespace PartnerEnovaNormaPraca
                                 {
                                     // Pomijanie brakujących
                                     listBox1.Items.Add($"Nie znaleziono pracownika o kodzie {prac} - pominięto");
+                                    jestPracownik = false;
                                 }
                                 else
                                 {

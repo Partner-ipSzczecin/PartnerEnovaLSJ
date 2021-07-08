@@ -548,14 +548,14 @@ namespace PartnerEnovaNormaPraca
                 {
                     using (ITransaction trans = session.Logout(true))
                     {
-                        //string pesel = "";
+                        string pesel = "";
                         //string nrPaszportu = "";
 
-                        //try
-                        //{
-                        //    pesel = daneSzczegolowe.p0010;
-                        //}
-                        //catch { }
+                        try
+                        {
+                            pesel = daneSzczegolowe.p0010;
+                        }
+                        catch { }
                         //// Polee z peselem obecnie nie jest wykorzystywane, sprawdzamy pole z numerem paszportu,
                         //// w którym obecnie wprowadzany jest także nr pesel
                         //if(daneSzczegolowe.p0011 != null)
@@ -632,40 +632,52 @@ namespace PartnerEnovaNormaPraca
                         if (daneSzczegolowe.p0009 != null)
                             ph.Urodzony.Miejsce = daneSzczegolowe.p0009;
 
-                        if (daneSzczegolowe.p0010 != null)
+
+                        //if (daneSzczegolowe.p0010 != null)
+                        //{
+                        //    // Jeśli jest wypełniony PESEL to wstawiamy
+                        //    try
+                        //    {
+                        //       pesel = daneSzczegolowe.p0010;
+                        //    }
+                        //    catch { }
+                        //}
+                        try
                         {
-                            // Jeśli jest wypełniony PESEL to wstawiamy
-                            try
+                            if (pesel.Length == 11)
                             {
-                                ph.PESEL = daneSzczegolowe.p0010;
-                            }
-                            catch { }
-                        }
-                        else
-                        {
-                            // Jeśli PESEL nie jest wypełniony to sprawdzamy czy w pozycji paszport 
-                            // jest jedenasto znakowy tekst
-                            if (daneSzczegolowe.p0011 != null && daneSzczegolowe.p0011.Replace(" ", "").Length == 11)
-                            {
-                                bool peselLiczba = false;
                                 try
                                 {
-                                    int liczba = 0;
-                                    liczba = int.Parse(daneSzczegolowe.p0011.Replace(" ", ""));
-                                    if (liczba != 0)
-                                        peselLiczba = true;
+                                    ph.PESEL = daneSzczegolowe.p0010;
                                 }
-                                catch { }
-
-                                if (peselLiczba)
+                                catch (Exception ex) { listBox1.Items.Add($"Dodanie nr PESEL: {ex.Message}"); }
+                            }
+                            else
+                            {
+                                // Jeśli PESEL nie jest wypełniony to sprawdzamy czy w pozycji paszport 
+                                // jest jedenasto znakowy tekst
+                                if (daneSzczegolowe.p0011 != null && daneSzczegolowe.p0011.Replace(" ", "").Length == 11)
+                                {
+                                    bool peselLiczba = false;
                                     try
                                     {
-                                        ph.PESEL = daneSzczegolowe.p0011.Replace(" ", "");
+                                        int liczba = 0;
+                                        liczba = int.Parse(daneSzczegolowe.p0011.Replace(" ", ""));
+                                        if (liczba != 0)
+                                            peselLiczba = true;
                                     }
                                     catch { }
+
+                                    if (peselLiczba)
+                                        try
+                                        {
+                                            ph.PESEL = daneSzczegolowe.p0011.Replace(" ", "");
+                                        }
+                                        catch (Exception ex) { listBox1.Items.Add($"Dodanie nr paszportu jako PESEL: {ex.Message}"); }
+                                }
                             }
                         }
-
+                        catch (Exception ex) { listBox1.Items.Add($"Obsługa nr PESEL: {ex.Message}"); }
 
                         if (daneSzczegolowe.p0015 != null)
                             ph.NIP = daneSzczegolowe.p0015;
