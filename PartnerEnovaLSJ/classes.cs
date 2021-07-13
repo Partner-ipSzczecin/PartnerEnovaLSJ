@@ -11,7 +11,7 @@ namespace PartnerEnovaNormaPraca
     {
         public partial class Info
         {
-            public static string Version = "v. 20.05.1";
+            public static string Version = "v. 21.07.1";
 
         }
 

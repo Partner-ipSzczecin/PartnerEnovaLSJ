@@ -644,11 +644,12 @@ namespace PartnerEnovaNormaPraca
                         //}
                         try
                         {
-                            if (pesel.Length == 11)
+                            if (pesel != null)
                             {
                                 try
                                 {
-                                    ph.PESEL = pesel;
+                                    if (pesel.Length == 11)
+                                        ph.PESEL = pesel;
                                 }
                                 catch (Exception ex) { listBox1.Items.Add($"Dodanie nr PESEL: {pesel} {ex.Message}"); }
                             }
@@ -669,26 +670,11 @@ namespace PartnerEnovaNormaPraca
 
                                     if (pesel.Length == 11)
                                     {
-                                        // Sprawdzamy czy podany ciąg jest liczbą
-                                        bool peselLiczba = false;
                                         try
                                         {
-                                            int liczba = 0;
-                                            liczba = int.Parse(pesel);
-                                            if (liczba != 0)
-                                                peselLiczba = true;
+                                            ph.PESEL = pesel;
                                         }
-                                        catch { }
-
-                                        // Jeśli mamy liczbę to próbujemy wstawić ją do peselu
-                                        if (peselLiczba)
-                                        {
-                                            try
-                                            {
-                                                ph.PESEL = pesel;
-                                            }
-                                            catch (Exception ex) { listBox1.Items.Add($"Dodanie nr paszportu jako PESEL: {ex.Message}"); }
-                                        }
+                                        catch (Exception ex) { listBox1.Items.Add($"Dodanie nr paszportu jako PESEL: {ex.Message}"); }
                                     }
                                     else
                                     {
